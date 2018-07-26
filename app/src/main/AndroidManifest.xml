@@ -18,6 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".tasks.triangle01.TriangleAct"/>
+
+        <activity android:name=".tasks.rectangle02.RectangleAct"/>
     </application>
 
 </manifest>

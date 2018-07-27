@@ -1,6 +1,7 @@
 package com.rolan.opengldemo.tasks.rectangle02
 
 import com.rolan.opengldemo.R
+import com.rolan.opengldemo.tasks.triangle01.TriangleKotlinView
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 /**
@@ -8,6 +9,20 @@ import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
  */
 class RectangleAct : BaseKotlinAct() {
     override fun inflateLayoutId(): Any {
-        return R.layout.activity_main
+        mView = RectangleView(this);
+        return mView as RectangleView;
+    }
+
+    var mView: RectangleView?=null;
+
+
+    override fun onPause() {
+        super.onPause()
+        mView?.onPause();
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mView?.onResume();
     }
 }

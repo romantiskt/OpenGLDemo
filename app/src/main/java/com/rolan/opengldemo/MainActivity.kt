@@ -3,6 +3,7 @@ package com.rolan.opengldemo
 import android.view.View
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.rolan.opengldemo.tasks.rectangle02.RectangleAct
 import com.rolan.opengldemo.tasks.triangle01.TriangleAct
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
@@ -17,11 +18,14 @@ class MainActivity : BaseKotlinAct() {
         setUnBinder(ButterKnife.bind(this))
     }
 
-    @OnClick(R.id.tv_triangle)
+    @OnClick(R.id.tv_triangle,R.id.tv_rectangle)
     fun click(view: View) {
         when (view.id) {
             R.id.tv_triangle -> {
                 go(TriangleAct::class.java)
+            }
+            R.id.tv_rectangle->{
+                go(RectangleAct::class.java)
             }
         }
     }

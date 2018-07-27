@@ -21,7 +21,7 @@ import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 public class TriangleAct : BaseKotlinAct() {
     override fun inflateLayoutId(): Any {
-        mView = TriangleKotlinView(getApplication());
+        mView = TriangleKotlinView(this);
         return mView as TriangleKotlinView;
     }
 

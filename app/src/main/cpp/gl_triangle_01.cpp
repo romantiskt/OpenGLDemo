@@ -16,7 +16,7 @@
 
 // OpenGL ES 2.0 code
 
-#include <jni.h>
+
 #include <android/log.h>
 
 #include <GLES2/gl2.h>
@@ -30,6 +30,7 @@
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 namespace gl_triangle_01 {
+#include "gl_triangle_01.h"
     static void printGLString(const char *name, GLenum s) {
         const char *v = (const char *) glGetString(s);
         LOGI("GL %s = %s\n", name, v);
@@ -127,8 +128,7 @@ namespace gl_triangle_01 {
         return program;
     }
 
-    GLuint gProgram;
-    GLuint gvPositionHandle;
+
 
     bool setupGraphics(int w, int h) {
 //    printGLString("Version", GL_VERSION);
@@ -180,14 +180,6 @@ namespace gl_triangle_01 {
         glDrawArrays(GL_TRIANGLES, 0, 3);// //执行绘制
         checkGlError("glDrawArrays");
     }
-
-    extern "C" {
-    JNIEXPORT void JNICALL
-    Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_init(JNIEnv *env, jobject obj,
-                                                                         jint width, jint height);
-    JNIEXPORT void JNICALL
-    Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_step(JNIEnv *env, jobject obj);
-    };
 
     JNIEXPORT void JNICALL
     Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_init(JNIEnv *env, jobject obj,

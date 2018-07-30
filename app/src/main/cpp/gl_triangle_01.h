@@ -8,8 +8,6 @@
 
 extern "C" {
 
-GLuint gProgram;
-GLuint gvPositionHandle;
 
     JNIEXPORT void JNICALL
     Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_init(JNIEnv *env, jobject obj,

@@ -18,30 +18,17 @@
 
 
 #include <jni.h>
-#include <android/log.h>
-
 #include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include "util.cpp"
 
-#define  LOG_TAG    "libgl2jni"
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+using namespace util;
+
+
 namespace gl_rectangle_02 {
-    static void printGLString(const char *name, GLenum s) {
-        const char *v = (const char *) glGetString(s);
-        LOGI("GL %s = %s\n", name, v);
-    }
 
-    static void checkGlError(const char *op) {
-        for (GLint error = glGetError(); error; error
-                                                        = glGetError()) {
-            LOGI("after %s() glError (0x%x)\n", op, error);
-        }
-    }
+#include "gl_rectangle_02.h"
 
 /**
  * 脚本代码
@@ -58,6 +45,8 @@ namespace gl_rectangle_02 {
                     "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
                     "}\n";
 
+    GLuint gProgram;
+    GLuint gvPositionHandle;
     GLuint loadShader(GLenum shaderType, const char *pSource) {
         GLuint shader = glCreateShader(shaderType);//1.创建一个着色器，返回着色器id，如果返回0则为创建失败
         if (shader) {
@@ -128,8 +117,7 @@ namespace gl_rectangle_02 {
         return program;
     }
 
-    GLuint gProgram;
-    GLuint gvPositionHandle;
+
 
     bool setupGraphics(int w, int h) {
 //    printGLString("Version", GL_VERSION);
@@ -181,15 +169,6 @@ namespace gl_rectangle_02 {
         glDrawArrays(GL_TRIANGLES, 0, 3);// //执行绘制
         checkGlError("glDrawArrays");
     }
-
-    extern "C" {
-    JNIEXPORT void JNICALL
-    Java_com_rolan_opengldemo_tasks_rectangle02_RectangleWidgetEngine_init(JNIEnv *env, jobject obj,
-                                                                           jint width, jint height);
-    JNIEXPORT void JNICALL
-    Java_com_rolan_opengldemo_tasks_rectangle02_RectangleWidgetEngine_step(JNIEnv *env,
-                                                                           jobject obj);
-    };
 
     JNIEXPORT void JNICALL
     Java_com_rolan_opengldemo_tasks_rectangle02_RectangleWidgetEngine_init(JNIEnv *env, jobject obj,

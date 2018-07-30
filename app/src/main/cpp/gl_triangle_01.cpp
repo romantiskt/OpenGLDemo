@@ -25,24 +25,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "util.cpp"
 
-#define  LOG_TAG    "libgl2jni"
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+
+using namespace util;
+GLuint gProgram;
+GLuint gvPositionHandle;
 namespace gl_triangle_01 {
+
 #include "gl_triangle_01.h"
-    static void printGLString(const char *name, GLenum s) {
-        const char *v = (const char *) glGetString(s);
-        LOGI("GL %s = %s\n", name, v);
-    }
-
-    static void checkGlError(const char *op) {
-        for (GLint error = glGetError(); error; error
-                                                        = glGetError()) {
-            LOGI("after %s() glError (0x%x)\n", op, error);
-        }
-    }
-
 /**
  * 脚本代码
  */
@@ -127,7 +118,6 @@ namespace gl_triangle_01 {
         }
         return program;
     }
-
 
 
     bool setupGraphics(int w, int h) {

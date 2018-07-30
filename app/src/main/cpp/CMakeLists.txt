@@ -17,6 +17,7 @@ add_library( # Sets the name of the library.
              SHARED
              gl_triangle_01.cpp
              gl_rectangle_02.cpp
+             gl_shaders_03.cpp
              # Provides a relative path to your source file(s).
              native-lib.cpp )
 

@@ -26,4 +26,14 @@
         android:gravity="center"
         android:background="@android:color/darker_gray"
         android:id="@+id/tv_rectangle"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:text="着色器"
+        android:clickable="true"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/tv_shaders"/>
 </LinearLayout>

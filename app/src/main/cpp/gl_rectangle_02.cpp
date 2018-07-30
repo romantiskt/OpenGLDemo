@@ -26,13 +26,21 @@
 namespace gl_rectangle_02 {
 
 #include "gl_rectangle_02.h"
-
 #include "util.cpp"
+using namespace util;
 	
-	using namespace util;
-/**
- * 脚本代码
- */
+	const GLfloat vertices[] = {
+			0.5f, 0.5f, 0.0f,   // 右上角
+			0.5f, -0.5f, 0.0f,  // 右下角
+			-0.5f, -0.5f, 0.0f, // 左下角
+			-0.5f, 0.5f, 0.0f,   // 左上角
+			0.0f,1.0f,0.0f  //中间上
+	};
+	unsigned int indices[] = { // 注意索引从0开始!
+			0, 1, 3, // 第一个三角形
+			1, 2, 3,  // 第二个三角形
+			0,3,4,
+	};
 	auto gVertexShader =
 			"attribute vec4 vPosition;\n"
 					"void main() {\n"
@@ -47,14 +55,9 @@ namespace gl_rectangle_02 {
 	
 	GLuint gProgram;
 	GLuint gvPositionHandle;
-	
+	GLuint vertexbuffer;
+	unsigned int EBO;
 	bool setupGraphics (int w, int h) {
-//    printGLString("Version", GL_VERSION);
-//    printGLString("Vendor", GL_VENDOR);
-//    printGLString("Renderer", GL_RENDERER);
-//    printGLString("Extensions", GL_EXTENSIONS);
-//
-//    LOGI("setupGraphics(%d, %d)", w, h);
 		gProgram = createProgram(gVertexShader, gFragmentShader);
 		if (!gProgram) {
 			LOGE("Could not create program.");
@@ -62,11 +65,18 @@ namespace gl_rectangle_02 {
 		}
 		gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");//属性绑定到 vPostion 关键字上
 		checkGlError("glGetAttribLocation");//创建
-//    LOGI("glGetAttribLocation(\"vPosition\") = %d\n",
-//            gvPositionHandle);
-		
 		glViewport(0, 0, w, h);//指定绘图区域，（坐标x ,坐标y,坐标x+width,坐标y+height） 后两个参数不是坐标，而是用宽高来间接指定坐标
 		checkGlError("glViewport");
+		
+		
+		glGenBuffers(1, &vertexbuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		//创建索引缓冲对象
+	
+		glGenBuffers(1, &EBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 		return true;
 	}
 	
@@ -89,14 +99,25 @@ namespace gl_rectangle_02 {
 		
 		glUseProgram(gProgram);  //根据着色程序id 指定要使用的着色器
 		checkGlError("glUseProgram");
-		
-		glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0,
-		                      gTriangleVertices);//将顶点位置数据传送进渲染管线, 为画笔指定定点的位置数据
-		checkGlError("glVertexAttribPointer");
+//		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(gvPositionHandle);//  //启用顶点位置数据
-		checkGlError("glEnableVertexAttribArray");
-		glDrawArrays(GL_TRIANGLES, 0, 3);// //执行绘制
-		checkGlError("glDrawArrays");
+		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+		glVertexAttribPointer(
+				0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+				3,                  // size
+				GL_FLOAT,           // type
+				GL_FALSE,           // normalized?
+				0,                  // stride
+				(void*)0            // array buffer offset
+		);
+		
+		// Draw the triangle !
+//        glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle 根据数据画三角形
+//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//线框模式
+//         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//填充模式
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);//根据索引绘制
+		glDisableVertexAttribArray(0);
+	
 	}
 	
 	JNIEXPORT void JNICALL

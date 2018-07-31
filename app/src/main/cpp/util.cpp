@@ -3,7 +3,8 @@
 //
 #include <GLES2/gl2ext.h>
 #include <GLES2/gl2.h>
-
+#include <stdio.h>
+#include <stdlib.h>
 #define  LOG_TAG    "libgl2jni"
 
 #include <android/log.h>

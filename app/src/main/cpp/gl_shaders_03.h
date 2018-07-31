@@ -14,7 +14,7 @@ Java_com_rolan_opengldemo_tasks_shaders03_ShadersWidgetEngine_init (JNIEnv *env,
                                                                       jint width, jint height);
 
 JNIEXPORT void JNICALL
-Java_com_rolan_opengldemo_tasks_shaders03_ShadersWidgetEngine_step (JNIEnv *env, jobject obj);
+Java_com_rolan_opengldemo_tasks_shaders03_ShadersWidgetEngine_render (JNIEnv *env, jobject obj);
 };
 
 #endif //OPENGLDEMO_GL_SHADERS_03_H

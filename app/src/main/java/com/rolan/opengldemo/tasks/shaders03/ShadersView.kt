@@ -13,7 +13,7 @@ class ShadersView:BaseOpenGLView{
     }
 
     override fun onDrawFrame(gl: GL10) {
-       ShadersWidgetEngine.step()
+       ShadersWidgetEngine.render()
     }
 
     constructor(context: Context?) : super(context)

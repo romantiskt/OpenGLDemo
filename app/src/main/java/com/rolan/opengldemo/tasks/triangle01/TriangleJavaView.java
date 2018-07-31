@@ -110,7 +110,7 @@ public class TriangleJavaView extends GLSurfaceView {
     }
     private static class Renderer implements GLSurfaceView.Renderer {
         public void onDrawFrame(GL10 gl) {
-            TriangleWidgetEngine.INSTANCE.step();
+            TriangleWidgetEngine.INSTANCE.render();
         }
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {

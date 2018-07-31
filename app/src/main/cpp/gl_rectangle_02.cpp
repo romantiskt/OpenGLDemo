@@ -126,7 +126,7 @@ namespace gl_rectangle_02 {
 	}
 	
 	JNIEXPORT void JNICALL
-	Java_com_rolan_opengldemo_tasks_rectangle02_RectangleWidgetEngine_step (JNIEnv *env,
+	Java_com_rolan_opengldemo_tasks_rectangle02_RectangleWidgetEngine_render (JNIEnv *env,
 	                                                                        jobject obj) {
 		renderFrame();
 	}

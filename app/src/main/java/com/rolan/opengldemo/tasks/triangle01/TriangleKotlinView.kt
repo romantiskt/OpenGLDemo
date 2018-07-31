@@ -22,7 +22,7 @@ class TriangleKotlinView : BaseOpenGLView {
 
 
     override fun onDrawFrame(gl: GL10) {
-        TriangleWidgetEngine.step()
+        TriangleWidgetEngine.render()
     }
 
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {

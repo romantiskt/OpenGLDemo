@@ -108,7 +108,7 @@ namespace gl_triangle_01 {
 	}
 	
 	JNIEXPORT void JNICALL
-	Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_step (JNIEnv *env,
+	Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_render (JNIEnv *env,
 	                                                                      jobject obj) {
 		renderFrame();
 	}

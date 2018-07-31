@@ -10,5 +10,5 @@ object ShadersWidgetEngine{
     }
 
     external fun init(width: Int, height: Int);
-    external fun step();
+    external fun render();
 }

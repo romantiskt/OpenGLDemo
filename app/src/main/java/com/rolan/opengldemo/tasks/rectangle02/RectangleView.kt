@@ -11,7 +11,7 @@ import javax.microedition.khronos.opengles.GL10
 
 class RectangleView :BaseOpenGLView{
     override fun onDrawFrame(gl: GL10) {
-       RectangleWidgetEngine.step()
+       RectangleWidgetEngine.render()
     }
 
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {

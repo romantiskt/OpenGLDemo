@@ -32,8 +32,8 @@ abstract class BaseOpenGLView : GLSurfaceView {
         if (translucent) {//设置一个半透明的背景
             this.holder.setFormat(PixelFormat.TRANSLUCENT)
         }
-        setEGLContextFactory(ContextFactory())
-        setRenderer(Renderer())
+        setEGLContextFactory(ContextFactory())//绑定一个context
+        setRenderer(Renderer())//设置一个视图提供者
     }
 
     inner class ContextFactory : GLSurfaceView.EGLContextFactory {

@@ -4,26 +4,33 @@
 
 
 #include <GLES2/gl2.h>
-
+#include "Shader.h"
 namespace gl_shaders_03 {
 
 //
 #include "gl_shaders_03.h"
 #include "util.cpp"
+
+
 	using namespace util;
 
 	auto gVertexShader =
-			"attribute vec4 vPosition;\n"
-					"void main() {\n"
-					"  gl_Position = vPosition;\n"
-//					"   gl_PointSize = 100;\n"   //设置点的大小
-					"}\n";
+			"attribute vec4 vPosition;"//默认精度修饰符
+					"varying vec4 vertexColor;"
+					"void main() {"
+					"  gl_Position = vPosition;"
+					"vertexColor = vec4(0.5, 0.0, 0.0, 1.0);"
+//					"   gl_PointSize = 100;"   //设置点的大小
+					"}";
 
 	auto gFragmentShader =
-			"precision mediump float;\n"
-					"void main() {\n"
-					"  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
-					"}\n";
+			"precision mediump float;"
+					"varying vec4 vertexColor;"//切记，着色器里是不支持c++注释的
+					"uniform vec4 ourColor;"
+					"void main() {"
+//					"  gl_FragColor = vertexColor;"
+					"  gl_FragColor = ourColor;"
+					"}";
 	const GLfloat vertices[] = {
 			0.5f, 0.5f, 0.0f,   // 右上角
 			0.5f, -0.5f, 0.0f,  // 右下角
@@ -32,13 +39,14 @@ namespace gl_shaders_03 {
 			0.0f, 1.0f, 0.0f  //中间上
 	};
 	unsigned int indices[] = { // 注意索引从0开始!
-			0,1, 2, 3,4, // 第一个三角形
+			0,1, 2,// 第一个三角形
+			2,3,0,
 	};
 	GLuint gProgram;
 	GLuint gPosition;
 	GLuint gVertexBuff;
 	unsigned int EBO;
-
+	Shader ourShader("shader.vs", "shader.fs");
 	bool init (int width, int height) {
 		gProgram = createProgram(gVertexShader, gFragmentShader);
 		if (!gProgram) {
@@ -56,7 +64,10 @@ namespace gl_shaders_03 {
 		glGenBuffers(1, &EBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
+		
+		
+		
+//		ourShader.use();
 		return true;
 
 	}
@@ -65,9 +76,17 @@ namespace gl_shaders_03 {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);//设置屏幕背景色
 		glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
 		glEnableVertexAttribArray(gPosition);
-
+		
+		static float grey;
+		grey += 0.01f;
+		if (grey > 1.0f) {
+			grey = 0.0f;
+		}
+		
 		glUseProgram(gProgram);
-
+		int vertexColorLocation = glGetUniformLocation(gProgram, "ourColor");
+		glUniform4f(vertexColorLocation, 0.0f, grey, 0.0f, 1.0f);
+		
 		glBindBuffer(GL_ARRAY_BUFFER,gVertexBuff);
 		glVertexAttribPointer(gPosition,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 //		GL_POINTS  需要设置点的大小 在着色器中
@@ -77,7 +96,7 @@ namespace gl_shaders_03 {
 //		GL_TRIANGLES    每三个顶点绘制一个三角形
 //		GL_TRIANGLE_STRIP  依赖于前两个出现的顶点，如果当前顶点是奇数，则三角形为 n-1 n-2 n  如果为偶数 则 n-2 n-1 n
 //		GL_TRIANGLE_FAN
-		glDrawElements(GL_POINTS,5,GL_UNSIGNED_INT,0);
+		glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
 		glDisableVertexAttribArray(gPosition);
  
 	}

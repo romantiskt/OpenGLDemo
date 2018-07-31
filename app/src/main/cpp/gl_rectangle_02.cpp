@@ -30,6 +30,18 @@ namespace gl_rectangle_02 {
 	
 	using namespace util;
 	
+	auto gVertexShader =
+			"attribute vec4 vPosition;\n"
+					"void main() {\n"
+					"  gl_Position = vPosition;\n"
+//					"   gl_PointSize = 100;\n"   //设置点的大小
+					"}\n";
+	
+	auto gFragmentShader =
+			"precision mediump float;\n"
+					"void main() {\n"
+					"  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
+					"}\n";
 	const GLfloat vertices[] = {
 			0.5f, 0.5f, 0.0f,   // 右上角
 			0.5f, -0.5f, 0.0f,  // 右下角
@@ -38,82 +50,54 @@ namespace gl_rectangle_02 {
 			0.0f, 1.0f, 0.0f  //中间上
 	};
 	unsigned int indices[] = { // 注意索引从0开始!
-			0, 1, 3, // 第一个三角形
-			1, 2, 3,  // 第二个三角形
-			0, 3, 4,
+			0,1, 2,// 第一个三角形
+			2,3,0,
 	};
-	auto gVertexShader =
-			"attribute vec4 vPosition;\n"
-					"void main() {\n"
-					"  gl_Position = vPosition;\n"
-					"}\n";
-	
-	auto gFragmentShader =
-			"precision mediump float;\n"
-					"void main() {\n"
-					"  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
-					"}\n";
-	
 	GLuint gProgram;
-	GLuint gvPositionHandle;
-	GLuint vertexbuffer;
+	GLuint gPosition;
+	GLuint gVertexBuff;
 	unsigned int EBO;
 	
-	bool setupGraphics (int w, int h) {
+	bool init (int width, int height) {
 		gProgram = createProgram(gVertexShader, gFragmentShader);
 		if (!gProgram) {
-			LOGE("Could not create program.");
+			LOGI("Could not create gProgram");
 			return false;
 		}
-		gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");//属性绑定到 vPostion 关键字上
-		glViewport(0, 0, w, h);//指定绘图区域，（坐标x ,坐标y,坐标x+width,坐标y+height） 后两个参数不是坐标，而是用宽高来间接指定坐标
+		gPosition = glGetAttribLocation(gProgram, "vPosition");
+		glViewport(0, 0, width, height);
 		
-		//创建顶点数组缓冲对象
-		glGenBuffers(1, &vertexbuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+		glGenBuffers(1, &gVertexBuff);
+		glBindBuffer(GL_ARRAY_BUFFER, gVertexBuff);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 		
-		//创建索引缓冲对象
+		
 		glGenBuffers(1, &EBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 		
-		
 		return true;
+		
 	}
 	
-	const GLfloat gTriangleVertices[] = {
-			-0.5f, 0.5f,
-			0.5f, 0.5f,
-			-0.5f, -0.5f,
-			0.5f, -0.5f};
-	
-	void renderFrame () {
-		static float grey;
-		grey += 0.01f;
-		if (grey > 1.0f) {
-			grey = 0.0f;
-		}
-		glEnableVertexAttribArray(gvPositionHandle);  //启用顶点位置数据
-//		glClearColor(grey, grey, grey, 1.0f);//设置屏幕背景色
+	void render () {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);//设置屏幕背景色
-		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT); //清除深度缓冲与颜色缓冲
+		glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
+		glEnableVertexAttribArray(gPosition);
 		
-		glUseProgram(gProgram);  //根据着色程序id 指定要使用的着色器
+		glUseProgram(gProgram);
 		
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(
-				0,                 // 顶点属性，即前面设置的gvPositionHandle                   
-				3,                 // 顶点属性的大小，这里为ve3 ,即size=3                       
-				GL_FLOAT,          // 顶点数据的数据类型                                     
-				GL_FALSE,          // 数据是否需要标准化 会被映射成0~1之间  有符号为-1到1                
-				0,                 // 连续的顶点属性之间的间隔                                  
-				(void *) 0           // 位置数据在缓冲中的偏移量                                
-		);
-//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//线框模式
-//         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//填充模式
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);//根据索引绘制
-		glDisableVertexAttribArray(0);     //关闭顶点位置数据
+		glBindBuffer(GL_ARRAY_BUFFER,gVertexBuff);
+		glVertexAttribPointer(gPosition,3,GL_FLOAT,GL_FALSE,0,(void*)0);
+//		GL_POINTS  需要设置点的大小 在着色器中
+//		GL_LINES   每一对顶点解释成一条直线
+//		GL_LINE_LOOP  连接尾部的连续的直线
+//		GL_LINE_STRIP 连续的直线
+//		GL_TRIANGLES    每三个顶点绘制一个三角形
+//		GL_TRIANGLE_STRIP  依赖于前两个出现的顶点，如果当前顶点是奇数，则三角形为 n-1 n-2 n  如果为偶数 则 n-2 n-1 n
+//		GL_TRIANGLE_FAN
+		glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
+		glDisableVertexAttribArray(gPosition);
 		
 	}
 	
@@ -122,13 +106,13 @@ namespace gl_rectangle_02 {
 	                                                                        jobject obj,
 	                                                                        jint width,
 	                                                                        jint height) {
-		setupGraphics(width, height);
+		init(width, height);
 	}
 	
 	JNIEXPORT void JNICALL
 	Java_com_rolan_opengldemo_tasks_rectangle02_RectangleWidgetEngine_render (JNIEnv *env,
 	                                                                        jobject obj) {
-		renderFrame();
+		render();
 	}
 	
 }

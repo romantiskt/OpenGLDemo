@@ -18,6 +18,7 @@ add_library( # Sets the name of the library.
              gl_triangle_01.cpp
              gl_rectangle_02.cpp
              gl_shaders_03.cpp
+             gl_textures_04.cpp
              # Provides a relative path to your source file(s).
              native-lib.cpp )
 

@@ -18,31 +18,30 @@ namespace gl_shaders_03 {
 	using namespace util;
 	
 	auto gVertexShader =
-			"#version 100"
-			"attribute vec4 vPosition;"//默认精度修饰符
+			"attribute vec3 vPosition;"//默认精度修饰符
 					"varying vec4 vertexColor;"
+					"attribute vec3 color;"
 					"void main() {"
-					"  gl_Position = vPosition;"
-					"vertexColor = vec4(0.5, 0.0, 0.0, 1.0);"
+					"  gl_Position = vec4(vPosition,1.0);"
+					"vertexColor =  vec4(color,1.0);"
 //					"   gl_PointSize = 100;"   //设置点的大小
 					"}";
 	
 	auto gFragmentShader =
-			"#version 100"
 			"precision mediump float;"
 					"varying vec4 vertexColor;"//切记，着色器里是不支持c++注释的
 					"uniform vec4 ourColor;"
 					"void main() {"
-//					"  gl_FragColor = vertexColor;"
-					"  gl_FragColor = ourColor;"
+					"  gl_FragColor = vertexColor;"
+//					"  gl_FragColor = ourColor;"
 					"}";
 	const GLfloat vertices[] = {
 			//顶点数据          //颜色
-			0.5f, 0.5f, 0.0f,   //1.0f, 0.0f, 0.0f,   // 右上角
-			0.5f, -0.5f, 0.0f,  //0.0f, 1.0f, 0.0f,  // 右下角
-			-0.5f, -0.5f, 0.0f, //0.0f, 0.0f, 1.0f,// 左下角
-			-0.5f, 0.5f, 0.0f,  //1.0f, 0.0f, 1.0f, // 左上角
-			0.0f, 1.0f, 0.0f,   //1.0f, 0.0f, 0.0f, //中间上
+			0.5f, 0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   // 右上角
+			0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // 右下角
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,// 左下角
+			-0.5f, 0.5f, 0.0f,  1.0f, 0.0f, 1.0f, // 左上角
+			0.0f, 1.0f, 0.0f,   1.0f, 0.0f, 0.0f, //中间上
 	};
 	unsigned int indices[] = { // 注意索引从0开始!
 			0, 1, 2,// 第一个三角形
@@ -50,6 +49,7 @@ namespace gl_shaders_03 {
 	};
 	GLuint gProgram;
 	GLuint gPosition;
+	GLuint gColor;
 	GLuint gVertexBuff;
 	unsigned int EBO;
 	Shader ourShader("shader.vs", "shader.fs");
@@ -60,7 +60,7 @@ namespace gl_shaders_03 {
 			LOGI("Could not create gProgram");
 			return false;
 		}
-		gPosition = glGetAttribLocation(gProgram, "vPosition");
+	
 		glViewport(0, 0, width, height);
 		
 		glGenBuffers(1, &gVertexBuff);
@@ -82,7 +82,10 @@ namespace gl_shaders_03 {
 	void render () {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);//设置屏幕背景色
 		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-		glEnableVertexAttribArray(gPosition);
+		
+		gPosition = glGetAttribLocation(gProgram, "vPosition");
+		gColor = glGetAttribLocation(gProgram, "color");
+		
 		
 		static float grey;
 		grey += 0.01f;
@@ -91,11 +94,15 @@ namespace gl_shaders_03 {
 		}
 		
 		glUseProgram(gProgram);
-		int vertexColorLocation = glGetUniformLocation(gProgram, "ourColor");
-		glUniform4f(vertexColorLocation, 0.0f, grey, 0.0f, 1.0f);
+//		int vertexColorLocation = glGetUniformLocation(gProgram, "ourColor");
+//		glUniform4f(vertexColorLocation, 0.0f, grey, 0.0f, 1.0f);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, gVertexBuff);
-		glVertexAttribPointer(gPosition, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+		glVertexAttribPointer(gPosition, 3, GL_FLOAT, GL_FALSE,  6 * sizeof(GLfloat), (void *) 0);
+		glEnableVertexAttribArray(gPosition);
+		
+		glVertexAttribPointer(gColor, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(gColor);
 //		GL_POINTS  需要设置点的大小 在着色器中
 //		GL_LINES   每一对顶点解释成一条直线
 //		GL_LINE_LOOP  连接尾部的连续的直线

@@ -50,13 +50,22 @@ namespace gl_textures_04 {
 	GLuint gVertexBuff;
 	unsigned int EBO;
 	int width, height, nrChannels;
-	bool init (int width, int height) {
+	bool init (jint width, jint height, JNIEnv *env, jobject pJobject) {
 		gProgram = createProgram(gVertexShader, gFragmentShader);
 		if (!gProgram) {
 			LOGI("Could not create gProgram");
 			return false;
 		}
+//		jclass cs=env->GetObjectClass(pJobject);
+//		jmethodID callbackStatic = env->GetStaticMethodID( cs, "createImage", "()V");
+//		env->CallStaticVoidMethod(cs, callbackStatic);
+		jclass clazz = env->FindClass("com/rolan/opengldemo/tasks/textures04/Test");
+		jmethodID constructor = env->GetMethodID(clazz, "<init>", "()V");
+		jobject storeObject = env->NewObject(clazz, constructor);
 		
+		jmethodID methodId = env->GetMethodID(clazz, "getImage", "()[B");
+		jbyteArray jbyteArray1=(jbyteArray)env->CallObjectMethod(storeObject,methodId);
+		int count = env->GetArrayLength(jbyteArray1);
 //		stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
 		// The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
 //		unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &nrChannels, 0);
@@ -98,7 +107,7 @@ namespace gl_textures_04 {
 	JNIEXPORT void JNICALL
 	Java_com_rolan_opengldemo_tasks_textures04_TexturesWidgetEngine_init (JNIEnv *env, jobject obj,
 	                                                                      jint width, jint height){
-		init(width, height);
+		init(width, height, env, obj);
 	}
 	
 	

@@ -5,6 +5,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.rolan.opengldemo.tasks.rectangle02.RectangleAct
 import com.rolan.opengldemo.tasks.shaders03.ShadersAct
+import com.rolan.opengldemo.tasks.textures04.Test
 import com.rolan.opengldemo.tasks.textures04.TexturesAct
 import com.rolan.opengldemo.tasks.triangle01.TriangleAct
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
@@ -34,6 +35,7 @@ class MainActivity : BaseKotlinAct() {
             }
             R.id.tv_textures->{
                 go(TexturesAct::class.java)
+//                Test().getImage()
             }
         }
     }

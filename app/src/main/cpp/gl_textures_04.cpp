@@ -30,11 +30,12 @@ namespace gl_textures_04 {
 
     auto gFragmentShader =
             "precision mediump float;"
+                    "uniform sampler2D uTexture;"
                     "varying vec4 vertexColor;"//切记，着色器里是不支持c++注释的
                      "varying vec2 TexCoord;"      
                     "uniform vec4 ourColor;"
                     "void main() {"
-                    "  gl_FragColor = texture(vertexColor, TexCoord);"
+                    "  gl_FragColor = texture2D(uTexture, TexCoord);"
                     "}";
     const GLfloat vertices[] = {
             //顶点数据          //颜色
@@ -52,6 +53,7 @@ namespace gl_textures_04 {
     GLuint gPosition;
     GLuint gColor;
     GLuint gTexCoord;
+    GLuint muTextureHandle;;
     GLuint gVertexBuff;
     unsigned int EBO;
     unsigned int texture;
@@ -66,7 +68,10 @@ namespace gl_textures_04 {
         memset(chars, 0, chars_len + 1);
         memcpy(chars, bytes, chars_len);
         chars[chars_len] = 0;
-
+        LOGI("chars   ......");
+        std::string s;
+        s=chars;
+        std::cout<<"这是输出的image:"+s<<std::endl;
         env->ReleaseByteArrayElements(bytearray, bytes, 0);
 
         return chars;
@@ -97,7 +102,7 @@ namespace gl_textures_04 {
         // set texture filtering parameters
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 100, 100, 0, GL_RGB, GL_UNSIGNED_BYTE, pmsg);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 10, 10, 0, GL_RGB, GL_UNSIGNED_BYTE, pmsg);
         glGenerateMipmap(GL_TEXTURE_2D);
 
         glViewport(0, 0, width, height);
@@ -120,10 +125,14 @@ namespace gl_textures_04 {
 
         gPosition = glGetAttribLocation(gProgram, "vPosition");
         gColor = glGetAttribLocation(gProgram, "color");
-        gTexCoord = glGetAttribLocation(gProgram, "TexCoord");
+        gTexCoord = glGetAttribLocation(gProgram, "aTexCoord");
 
 
         glUseProgram(gProgram);
+
+        muTextureHandle = glGetUniformLocation(gProgram, "uTexture");
+//		glUniform4f(vertexColorLocation, 0.0f, grey, 0.0f, 1.0f);
+        glUniform1i(muTextureHandle, 0);
 
         glBindBuffer(GL_ARRAY_BUFFER, gVertexBuff);
         glVertexAttribPointer(gPosition, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void *) 0);

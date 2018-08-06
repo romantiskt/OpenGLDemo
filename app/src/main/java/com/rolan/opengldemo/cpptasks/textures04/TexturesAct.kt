@@ -1,18 +1,17 @@
-package com.rolan.opengldemo.tasks.shaders03
+package com.rolan.opengldemo.cpptasks.textures04
 
-import com.rolan.opengldemo.tasks.rectangle02.RectangleView
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 /**
- * Created by wangyang on 2018/7/30.下午3:42
+ * Created by wangyang on 2018/8/1.下午2:31
  */
-class ShadersAct:BaseKotlinAct() {
+class TexturesAct: BaseKotlinAct() {
     override fun inflateLayoutId(): Any {
-        mView = ShadersView(this);
-        return mView as ShadersView;
+        mView = TexturesView(this);
+        return mView as TexturesView;
     }
 
-    var mView: ShadersView?=null;
+    var mView: TexturesView?=null;
 
 
     override fun onPause() {

@@ -9,10 +9,12 @@ import com.rolan.opengldemo.cpptasks.textures04.TexturesAct
 import com.rolan.opengldemo.cpptasks.triangle01.TriangleAct
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
-class MainActivity : BaseKotlinAct() {
-
+/**
+ * Created by wangyang on 2018/8/6.下午9:06
+ */
+class CppAct :BaseKotlinAct(){
     override fun inflateLayoutId(): Any {
-        return R.layout.activity_main
+        return R.layout.activity_cpp
     }
 
     override fun afterInflateView() {
@@ -20,14 +22,21 @@ class MainActivity : BaseKotlinAct() {
         setUnBinder(ButterKnife.bind(this))
     }
 
-    @OnClick(R.id.tv_cpp,R.id.tv_kotlin)
+    @OnClick(R.id.tv_triangle,R.id.tv_rectangle,R.id.tv_shaders,R.id.tv_textures)
     fun click(view: View) {
         when (view.id) {
-            R.id.tv_cpp -> {
-                go(CppAct::class.java)
+            R.id.tv_triangle -> {
+                go(TriangleAct::class.java)
             }
-            R.id.tv_kotlin->{
-                go(KotlinAct::class.java)
+            R.id.tv_rectangle->{
+                go(RectangleAct::class.java)
+            }
+            R.id.tv_shaders->{
+                go(ShadersAct::class.java)
+            }
+            R.id.tv_textures->{
+                go(TexturesAct::class.java)
+//                Test().getImage()
             }
         }
     }

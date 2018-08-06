@@ -18,11 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".tasks.triangle01.TriangleAct"/>
+        <activity android:name=".cpptasks.triangle01.TriangleAct"/>
 
-        <activity android:name=".tasks.rectangle02.RectangleAct"/>
-        <activity android:name=".tasks.shaders03.ShadersAct"/>
-        <activity android:name=".tasks.textures04.TexturesAct"/>
+        <activity android:name=".cpptasks.rectangle02.RectangleAct"/>
+        <activity android:name=".cpptasks.shaders03.ShadersAct"/>
+        <activity android:name=".cpptasks.textures04.TexturesAct"/>
+        <activity android:name=".CppAct"/>
+        <activity android:name=".KotlinAct"/>
     </application>
 
 </manifest>

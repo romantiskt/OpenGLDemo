@@ -1,9 +1,9 @@
-package com.rolan.opengldemo.tasks.shaders03
+package com.rolan.opengldemo.cpptasks.rectangle02
 
 /**
- * Created by wangyang on 2018/7/30.下午3:43
+ * Created by wangyang on 2018/7/26.下午4:26
  */
-object ShadersWidgetEngine{
+object RectangleWidgetEngine {
 
     init {
         System.loadLibrary("native-lib")

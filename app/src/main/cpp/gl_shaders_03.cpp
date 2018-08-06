@@ -116,14 +116,14 @@ namespace gl_shaders_03 {
 	}
 	
 	JNIEXPORT void JNICALL
-	Java_com_rolan_opengldemo_tasks_shaders03_ShadersWidgetEngine_init (JNIEnv *env, jobject obj,
+	Java_com_rolan_opengldemo_cpptasks_shaders03_ShadersWidgetEngine_init (JNIEnv *env, jobject obj,
 	                                                                    jint width, jint height) {
 		init(width, height);
 	}
 	
 	
 	JNIEXPORT void JNICALL
-	Java_com_rolan_opengldemo_tasks_shaders03_ShadersWidgetEngine_render (JNIEnv *env,
+	Java_com_rolan_opengldemo_cpptasks_shaders03_ShadersWidgetEngine_render (JNIEnv *env,
 	                                                                      jobject obj) {
 		render();
 	}

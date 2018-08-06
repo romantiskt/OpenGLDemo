@@ -102,13 +102,13 @@ namespace gl_triangle_01 {
 	}
 	
 	JNIEXPORT void JNICALL
-	Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_init (JNIEnv *env, jobject obj,
+	Java_com_rolan_opengldemo_cpptasks_triangle01_TriangleWidgetEngine_init (JNIEnv *env, jobject obj,
 	                                                                      jint width, jint height) {
 		setupGraphics(width, height);
 	}
 	
 	JNIEXPORT void JNICALL
-	Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_render (JNIEnv *env,
+	Java_com_rolan_opengldemo_cpptasks_triangle01_TriangleWidgetEngine_render (JNIEnv *env,
 	                                                                      jobject obj) {
 		renderFrame();
 	}

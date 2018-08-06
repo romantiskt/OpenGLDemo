@@ -11,21 +11,39 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="10dp"
-        android:text="cpp"
+        android:text="三角形"
         android:clickable="true"
         android:gravity="center"
         android:background="@android:color/darker_gray"
-        android:id="@+id/tv_cpp"/>
+        android:id="@+id/tv_triangle"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="10dp"
-        android:text="kotlin"
+        android:text="矩形"
         android:clickable="true"
         android:gravity="center"
         android:background="@android:color/darker_gray"
-        android:id="@+id/tv_kotlin"/>
+        android:id="@+id/tv_rectangle"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:text="着色器"
+        android:clickable="true"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/tv_shaders"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:text="纹理"
+        android:clickable="true"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/tv_textures"/>
 </LinearLayout>

@@ -1,14 +1,14 @@
-package com.rolan.opengldemo.tasks.rectangle02
+package com.rolan.opengldemo.cpptasks.triangle01;
 
-/**
- * Created by wangyang on 2018/7/26.下午4:26
- */
-object RectangleWidgetEngine {
+// Wrapper for native library
 
+object TriangleWidgetEngine {
     init {
         System.loadLibrary("native-lib")
     }
 
     external fun init(width: Int, height: Int);
     external fun render();
+
+
 }

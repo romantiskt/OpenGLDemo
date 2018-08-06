@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rolan.opengldemo.tasks.triangle01;
+package com.rolan.opengldemo.cpptasks.triangle01;
 /*
  * Copyright (C) 2008 The Android Open Source Project
  *

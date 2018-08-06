@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rolan.opengldemo.tasks.triangle01;
+package com.rolan.opengldemo.cpptasks.triangle01;
 
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 

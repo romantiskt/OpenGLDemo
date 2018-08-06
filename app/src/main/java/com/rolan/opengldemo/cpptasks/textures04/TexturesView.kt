@@ -1,19 +1,20 @@
-package com.rolan.opengldemo.tasks.shaders03
+package com.rolan.opengldemo.cpptasks.textures04
 
 import android.content.Context
 import com.rolan.opengldemo.base.BaseOpenGLView
 import javax.microedition.khronos.opengles.GL10
 
 /**
- * Created by wangyang on 2018/7/30.下午3:43
+ * Created by wangyang on 2018/8/1.下午2:31
  */
-class ShadersView:BaseOpenGLView{
+class TexturesView : BaseOpenGLView {
+    private val engine = TexturesWidgetEngine()
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
-        ShadersWidgetEngine.init(width,height)
+        engine.init(width,height)
     }
 
     override fun onDrawFrame(gl: GL10) {
-       ShadersWidgetEngine.render()
+        engine.render()
     }
 
     constructor(context: Context?) : super(context)

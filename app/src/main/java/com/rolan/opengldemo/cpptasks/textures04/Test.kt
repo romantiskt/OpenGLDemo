@@ -1,6 +1,5 @@
-package com.rolan.opengldemo.tasks.textures04
+package com.rolan.opengldemo.cpptasks.textures04
 
-import android.app.Application
 import com.rolan.opengldemo.utils.LogUtils
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
@@ -25,5 +24,10 @@ class Test {
         open?.read(buffer)
         open?.close()
         return buffer
+    }
+
+    fun getBitmap():Bitmap{
+        val bitmap = BitmapFactory.decodeResource(MyApp.context.resources, R.mipmap.ic_launcher);
+        return bitmap;
     }
 }

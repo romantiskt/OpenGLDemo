@@ -10,11 +10,11 @@ extern "C" {
 
 
 JNIEXPORT void JNICALL
-Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_init (JNIEnv *env, jobject obj,
+Java_com_rolan_opengldemo_cpptasks_triangle01_TriangleWidgetEngine_init (JNIEnv *env, jobject obj,
                                                                       jint width, jint height);
 
 JNIEXPORT void JNICALL
-Java_com_rolan_opengldemo_tasks_triangle01_TriangleWidgetEngine_render (JNIEnv *env, jobject obj);
+Java_com_rolan_opengldemo_cpptasks_triangle01_TriangleWidgetEngine_render (JNIEnv *env, jobject obj);
 };
 
 

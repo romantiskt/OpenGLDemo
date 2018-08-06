@@ -1,7 +1,6 @@
-package com.rolan.opengldemo.tasks.rectangle02
+package com.rolan.opengldemo.cpptasks.rectangle02
 
 import android.content.Context
-import android.opengl.GLSurfaceView
 import com.rolan.opengldemo.base.BaseOpenGLView
 import javax.microedition.khronos.opengles.GL10
 

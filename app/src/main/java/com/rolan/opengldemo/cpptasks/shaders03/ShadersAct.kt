@@ -1,17 +1,17 @@
-package com.rolan.opengldemo.tasks.textures04
+package com.rolan.opengldemo.cpptasks.shaders03
 
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 /**
- * Created by wangyang on 2018/8/1.下午2:31
+ * Created by wangyang on 2018/7/30.下午3:42
  */
-class TexturesAct: BaseKotlinAct() {
+class ShadersAct:BaseKotlinAct() {
     override fun inflateLayoutId(): Any {
-        mView = TexturesView(this);
-        return mView as TexturesView;
+        mView = ShadersView(this);
+        return mView as ShadersView;
     }
 
-    var mView: TexturesView?=null;
+    var mView: ShadersView?=null;
 
 
     override fun onPause() {

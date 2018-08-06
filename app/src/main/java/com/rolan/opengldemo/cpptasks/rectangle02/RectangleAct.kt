@@ -1,7 +1,5 @@
-package com.rolan.opengldemo.tasks.rectangle02
+package com.rolan.opengldemo.cpptasks.rectangle02
 
-import com.rolan.opengldemo.R
-import com.rolan.opengldemo.tasks.triangle01.TriangleKotlinView
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 /**

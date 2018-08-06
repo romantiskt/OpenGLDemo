@@ -102,7 +102,7 @@ namespace gl_rectangle_02 {
 	}
 	
 	JNIEXPORT void JNICALL
-	Java_com_rolan_opengldemo_tasks_rectangle02_RectangleWidgetEngine_init (JNIEnv *env,
+	Java_com_rolan_opengldemo_cpptasks_rectangle02_RectangleWidgetEngine_init (JNIEnv *env,
 	                                                                        jobject obj,
 	                                                                        jint width,
 	                                                                        jint height) {
@@ -110,7 +110,7 @@ namespace gl_rectangle_02 {
 	}
 	
 	JNIEXPORT void JNICALL
-	Java_com_rolan_opengldemo_tasks_rectangle02_RectangleWidgetEngine_render (JNIEnv *env,
+	Java_com_rolan_opengldemo_cpptasks_rectangle02_RectangleWidgetEngine_render (JNIEnv *env,
 	                                                                        jobject obj) {
 		render();
 	}

@@ -1,6 +1,4 @@
-package com.rolan.opengldemo.tasks.textures04
-
-import com.rolan.opengldemo.utils.LogUtils
+package com.rolan.opengldemo.cpptasks.textures04
 
 /**
  * Created by wangyang on 2018/8/1.下午2:30

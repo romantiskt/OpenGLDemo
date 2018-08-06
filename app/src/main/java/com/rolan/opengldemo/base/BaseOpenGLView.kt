@@ -4,9 +4,6 @@ import android.content.Context
 import android.graphics.PixelFormat
 import android.opengl.GLSurfaceView
 import android.util.Log
-import com.rolan.opengldemo.tasks.triangle01.TriangleKotlinView
-import com.rolan.opengldemo.tasks.triangle01.TriangleWidgetEngine
-import com.rolan.opengldemo.tasks.triangle01.TriangleWidgetEngine.init
 import com.rolan.opengldemo.utils.LogUtils
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig

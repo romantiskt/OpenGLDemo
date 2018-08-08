@@ -4,6 +4,7 @@ import android.view.View
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.rolan.opengldemo.kotlintasks.widget.RectangleView_02
+import com.rolan.opengldemo.kotlintasks.widget.ShaderView_03
 import com.rolan.opengldemo.kotlintasks.widget.TriangleView_01
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
@@ -30,7 +31,7 @@ class KotlinAct:BaseKotlinAct(){
                 goWidget(RectangleView_02::class.java)
             }
             R.id.tv_shaders->{
-                goWidget(RectangleView_02::class.java)
+                goWidget(ShaderView_03::class.java)
             }
             R.id.tv_textures->{
                 goWidget(RectangleView_02::class.java)

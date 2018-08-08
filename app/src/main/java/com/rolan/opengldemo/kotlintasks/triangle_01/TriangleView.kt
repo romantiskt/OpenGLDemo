@@ -16,27 +16,16 @@ class TriangleView : BaseOpenGLKotlinView {
     private var program: Int = 0
     private var vPosition: Int = 0
     private var uColor: Int = 0
-    fun getVertices(): FloatBuffer {
-        var vertices: FloatArray = floatArrayOf(
-                -0.5f, 0.5f,1.0f,
-                0.5f, 0.5f,1.0f,
-                -0.5f, -0.5f,1.0f);
-
-        // 创建顶点坐标数据缓冲
-        // vertices.length*4是因为一个float占四个字节
-        var vbb: ByteBuffer = ByteBuffer.allocateDirect(vertices.size * 4)
-        vbb.order(ByteOrder.nativeOrder())           //设置字节顺序
-        var vertexBuf: FloatBuffer = vbb.asFloatBuffer()   //转换为Float型缓冲
-        vertexBuf.put(vertices)                       //向缓冲区中放入顶点坐标数据
-        vertexBuf.position(0)                         //设置缓冲区起始位置
-        return vertexBuf;
-    }
+    var vertices: FloatArray = floatArrayOf(
+            -0.5f, 0.5f,1.0f,
+            0.5f, 0.5f,1.0f,
+            -0.5f, -0.5f,1.0f);
 
     constructor(context: Context?) : super(context)
 
     override fun onDrawFrame(gl: GL10) {
         // 获取图形的顶点坐标
-        var vertices = getVertices();
+        var vertices = getFloatArraryBuffer(vertices);
         // 使用某套shader程序
         GLES20.glUseProgram(program);
         // 为画笔指定顶点位置数据(vPosition)
@@ -47,6 +36,7 @@ class TriangleView : BaseOpenGLKotlinView {
         GLES20.glUniform4f(uColor, 0.0f, 1.0f, 0.0f, 1.0f);
         // 绘制
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 3)
+        GLES20.glDisableVertexAttribArray(vPosition)
     }
 
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {

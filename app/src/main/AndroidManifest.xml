@@ -26,6 +26,7 @@
         <activity android:name=".CppAct"/>
         <activity android:name=".KotlinAct"/>
         <activity android:name=".kotlintasks.triangle_01.TriangleKotlinAct"/>
+        <activity android:name=".kotlintasks.rectangle_02.RectangleAct"/>
     </application>
 
 </manifest>

@@ -30,7 +30,7 @@ class KotlinAct:BaseKotlinAct(){
                 go(TriangleKotlinAct::class.java)
             }
             R.id.tv_rectangle->{
-                go(RectangleAct::class.java)
+                go(com.rolan.opengldemo.kotlintasks.rectangle_02.RectangleAct::class.java)
             }
             R.id.tv_shaders->{
                 go(ShadersAct::class.java)

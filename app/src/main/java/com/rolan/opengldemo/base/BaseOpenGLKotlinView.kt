@@ -6,6 +6,10 @@ import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import android.util.Log
 import com.rolan.opengldemo.utils.LogUtils
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import java.nio.FloatBuffer
+import java.nio.ShortBuffer
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLContext
@@ -93,8 +97,8 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
             var compiled = IntArray(1)
             GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0)//4.获取着色器的编译情况, 如果结果为0, 说明编译失败
             if (compiled[0] == 0) {//若编译失败则显示错误日志并删除此shader
-                LogUtils.dTag("ES20_ERROR", "Could not compile shader " + shaderType + ":")
-                LogUtils.dTag("ES20_ERROR", GLES20.glGetShaderInfoLog(shader))
+                LogUtils.dTag(TAG, "Could not compile shader " + shaderType + ":")
+                LogUtils.dTag(TAG, GLES20.glGetShaderInfoLog(shader))
                 GLES20.glDeleteShader(shader)
                 shader = 0//删除着色器
             }
@@ -120,12 +124,31 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
             var linkStatus:IntArray = IntArray(1);// 存放链接成功program数量的数组
             GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0);//获取链接程序结果
             if (linkStatus[0] != GLES20.GL_TRUE) {//链接程序失败
-                LogUtils.dTag("ES20_ERROR", "Could not link program: ")
-                LogUtils.dTag("ES20_ERROR", GLES20.glGetProgramInfoLog(program))
+                LogUtils.dTag(TAG, "Could not link program: ")
+                LogUtils.dTag(TAG, GLES20.glGetProgramInfoLog(program))
                 GLES20.glDeleteProgram(program)
                 program = 0
             }
         }
         return program
+    }
+
+    fun getFloatArraryBuffer(data:FloatArray): FloatBuffer {
+        // data.size*4是因为一个float占四个字节
+        var vbb: ByteBuffer = ByteBuffer.allocateDirect(data.size * 4)  // 创建数据缓冲
+        vbb.order(ByteOrder.nativeOrder())           //设置字节顺序
+        var vertexBuf: FloatBuffer = vbb.asFloatBuffer()   //转换为Float型缓冲
+        vertexBuf.put(data)                       //向缓冲区中放入顶点坐标数据
+        vertexBuf.position(0)                         //设置缓冲区起始位置
+        return vertexBuf;
+    }
+    fun getShortArraryBuffer(data:ShortArray): ShortBuffer {
+        // data.size*4是因为一个float占四个字节
+        var vbb: ByteBuffer = ByteBuffer.allocateDirect(data.size * 2)  // 创建数据缓冲
+        vbb.order(ByteOrder.nativeOrder())           //设置字节顺序
+        var vertexBuf: ShortBuffer = vbb.asShortBuffer()   //转换为Float型缓冲
+        vertexBuf.put(data)                       //向缓冲区中放入顶点坐标数据
+        vertexBuf.position(0)                         //设置缓冲区起始位置
+        return vertexBuf;
     }
 }

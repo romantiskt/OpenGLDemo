@@ -25,6 +25,7 @@
         <activity android:name=".cpptasks.textures04.TexturesAct"/>
         <activity android:name=".CppAct"/>
         <activity android:name=".KotlinAct"/>
+        <activity android:name=".kotlintasks.triangle_01.TriangleKotlinAct"/>
     </application>
 
 </manifest>

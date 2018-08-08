@@ -7,6 +7,7 @@ import com.rolan.opengldemo.cpptasks.rectangle02.RectangleAct
 import com.rolan.opengldemo.cpptasks.shaders03.ShadersAct
 import com.rolan.opengldemo.cpptasks.textures04.TexturesAct
 import com.rolan.opengldemo.cpptasks.triangle01.TriangleAct
+import com.rolan.opengldemo.kotlintasks.triangle_01.TriangleKotlinAct
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 /**
@@ -26,7 +27,7 @@ class KotlinAct:BaseKotlinAct(){
     fun click(view: View) {
         when (view.id) {
             R.id.tv_triangle -> {
-                go(TriangleAct::class.java)
+                go(TriangleKotlinAct::class.java)
             }
             R.id.tv_rectangle->{
                 go(RectangleAct::class.java)

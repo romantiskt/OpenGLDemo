@@ -14,7 +14,7 @@ import javax.microedition.khronos.opengles.GL10
 /**
  * Created by wangyang on 2018/7/26.下午4:02
  */
-abstract class BaseOpenGLView : GLSurfaceView {
+abstract class BaseOpenGLCppView : GLSurfaceView {
     var TAG: String? = this.javaClass.simpleName;
 
     constructor(context: Context?) : super(context) {
@@ -36,7 +36,7 @@ abstract class BaseOpenGLView : GLSurfaceView {
     inner class ContextFactory : GLSurfaceView.EGLContextFactory {
         val EGL_CONTEXT_CLIENT_VERSION = 0x3098
         override fun createContext(egl: EGL10, display: EGLDisplay, eglConfig: EGLConfig): EGLContext {
-            LogUtils.dTag(this@BaseOpenGLView.TAG, "creating OpenGL ES 2.0 context")
+            LogUtils.dTag(this@BaseOpenGLCppView.TAG, "creating OpenGL ES 2.0 context")
             checkEglError("Before eglCreateContext", egl)
             val attrib_list = intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE)
             val context = egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, attrib_list)
@@ -62,15 +62,15 @@ abstract class BaseOpenGLView : GLSurfaceView {
 
     inner class Renderer : GLSurfaceView.Renderer {
         override fun onDrawFrame(gl: GL10) {
-            this@BaseOpenGLView.onDrawFrame(gl);
+            this@BaseOpenGLCppView.onDrawFrame(gl);
         }
 
         override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
-            this@BaseOpenGLView.onSurfaceChanged(gl, width, height);
+            this@BaseOpenGLCppView.onSurfaceChanged(gl, width, height);
         }
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
-            this@BaseOpenGLView.onSurfaceCreated(gl, config)
+            this@BaseOpenGLCppView.onSurfaceCreated(gl, config)
         }
     }
 

@@ -22,6 +22,7 @@ import javax.microedition.khronos.opengles.GL10
 abstract class BaseOpenGLKotlinView : GLSurfaceView {
     var TAG: String? = this.javaClass.simpleName;
     var grey: Float = 0f;
+    var mContext:Context=this.context;
 
     constructor(context: Context?) : super(context) {
         init(false, 0, 0)

@@ -11,6 +11,7 @@ import javax.microedition.khronos.opengles.GL10
 
 /**
  * Created by wangyang on 2018/8/8.上午10:48
+ * 三角形
  */
 class TriangleView_01 : BaseOpenGLKotlinView {
     private var program: Int = 0

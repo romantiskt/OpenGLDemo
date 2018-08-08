@@ -5,6 +5,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.rolan.opengldemo.kotlintasks.widget.RectangleView_02
 import com.rolan.opengldemo.kotlintasks.widget.ShaderView_03
+import com.rolan.opengldemo.kotlintasks.widget.TexturesView_04
 import com.rolan.opengldemo.kotlintasks.widget.TriangleView_01
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
@@ -34,7 +35,7 @@ class KotlinAct:BaseKotlinAct(){
                 goWidget(ShaderView_03::class.java)
             }
             R.id.tv_textures->{
-                goWidget(RectangleView_02::class.java)
+                goWidget(TexturesView_04::class.java)
             }
         }
     }

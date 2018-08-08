@@ -3,10 +3,7 @@ package com.rolan.opengldemo
 import android.view.View
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.rolan.opengldemo.kotlintasks.widget.RectangleView_02
-import com.rolan.opengldemo.kotlintasks.widget.ShaderView_03
-import com.rolan.opengldemo.kotlintasks.widget.TexturesView_04
-import com.rolan.opengldemo.kotlintasks.widget.TriangleView_01
+import com.rolan.opengldemo.kotlintasks.widget.*
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 /**
@@ -22,7 +19,8 @@ class KotlinAct:BaseKotlinAct(){
         setUnBinder(ButterKnife.bind(this))
     }
 
-    @OnClick(R.id.tv_triangle,R.id.tv_rectangle,R.id.tv_shaders,R.id.tv_textures)
+    @OnClick(R.id.tv_triangle,R.id.tv_rectangle,R.id.tv_shaders,R.id.tv_textures
+    ,R.id.tv_transform)
     fun click(view: View) {
         when (view.id) {
             R.id.tv_triangle -> {
@@ -36,6 +34,9 @@ class KotlinAct:BaseKotlinAct(){
             }
             R.id.tv_textures->{
                 goWidget(TexturesView_04::class.java)
+            }
+            R.id.tv_transform->{
+                goWidget(TransformView_05::class.java)
             }
         }
     }

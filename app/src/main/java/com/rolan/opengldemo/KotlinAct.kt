@@ -3,11 +3,8 @@ package com.rolan.opengldemo
 import android.view.View
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.rolan.opengldemo.cpptasks.rectangle02.RectangleAct
-import com.rolan.opengldemo.cpptasks.shaders03.ShadersAct
-import com.rolan.opengldemo.cpptasks.textures04.TexturesAct
-import com.rolan.opengldemo.cpptasks.triangle01.TriangleAct
-import com.rolan.opengldemo.kotlintasks.triangle_01.TriangleKotlinAct
+import com.rolan.opengldemo.kotlintasks.widget.RectangleView_02
+import com.rolan.opengldemo.kotlintasks.widget.TriangleView_01
 import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 /**
@@ -27,17 +24,16 @@ class KotlinAct:BaseKotlinAct(){
     fun click(view: View) {
         when (view.id) {
             R.id.tv_triangle -> {
-                go(TriangleKotlinAct::class.java)
+                goWidget(TriangleView_01::class.java)
             }
             R.id.tv_rectangle->{
-                go(com.rolan.opengldemo.kotlintasks.rectangle_02.RectangleAct::class.java)
+                goWidget(RectangleView_02::class.java)
             }
             R.id.tv_shaders->{
-                go(ShadersAct::class.java)
+                goWidget(RectangleView_02::class.java)
             }
             R.id.tv_textures->{
-                go(TexturesAct::class.java)
-//                Test().getImage()
+                goWidget(RectangleView_02::class.java)
             }
         }
     }

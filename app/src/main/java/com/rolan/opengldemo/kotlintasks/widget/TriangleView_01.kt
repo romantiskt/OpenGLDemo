@@ -1,4 +1,4 @@
-package com.rolan.opengldemo.kotlintasks.triangle_01
+package com.rolan.opengldemo.kotlintasks.widget
 
 import android.content.Context
 import android.opengl.GLES20
@@ -12,7 +12,7 @@ import javax.microedition.khronos.opengles.GL10
 /**
  * Created by wangyang on 2018/8/8.上午10:48
  */
-class TriangleView : BaseOpenGLKotlinView {
+class TriangleView_01 : BaseOpenGLKotlinView {
     private var program: Int = 0
     private var vPosition: Int = 0
     private var uColor: Int = 0

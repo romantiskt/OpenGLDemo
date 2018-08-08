@@ -26,7 +26,7 @@ abstract class BaseKotlinAct : AppCompatActivity(), IBaseView {
     var TAG: String = this.javaClass.simpleName
     internal var mUnBinder: Unbinder? = null
     internal var mProgressDialog: ProgressDialog? = null
-
+    private var clazz: Class<out BaseKotlinAct> = BaseKotlinAct::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +74,12 @@ abstract class BaseKotlinAct : AppCompatActivity(), IBaseView {
      */
     open fun <T> go(clazz: Class<T>) {
         ActUtil.go(this, clazz)
+    }
+    /**
+     * 跳转
+     */
+    open fun <T> goWidget(widgetType: Class<T>) {
+        ActUtil.goActByWidgetType(this, widgetType)
     }
 
     fun setUnBinder(unBinder: Unbinder) {

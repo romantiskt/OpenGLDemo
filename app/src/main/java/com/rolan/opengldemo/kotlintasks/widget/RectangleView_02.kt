@@ -1,4 +1,4 @@
-package com.rolan.opengldemo.kotlintasks.rectangle_02
+package com.rolan.opengldemo.kotlintasks.widget
 
 import android.content.Context
 import android.opengl.GLES20
@@ -12,7 +12,7 @@ import javax.microedition.khronos.opengles.GL10
  */
 
 
-class RectangleView(context: Context?) : BaseOpenGLKotlinView(context) {
+class RectangleView_02(context: Context?) : BaseOpenGLKotlinView(context) {
 
     private var gProgram: Int = 0
     private var gPosition: Int = 0

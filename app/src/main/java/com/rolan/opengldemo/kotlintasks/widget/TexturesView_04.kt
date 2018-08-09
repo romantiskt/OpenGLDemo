@@ -48,7 +48,11 @@ class TexturesView_04(context: Context?) : BaseOpenGLKotlinView(context) {
             0.0f, 1.0f, 0.0f,
             0.0f, 0.0f, 1.0f
     )
-    var textures: FloatArray = floatArrayOf(//顺序改变可对纹理产生旋转的效果 支持 90 180 270度旋转
+    /**
+     * 顺序改变可对纹理产生旋转的效果 支持 90 180 270度旋转
+     * 纹理坐标越大对图像有缩小效果   坐标越小对图像有放大效果
+     */
+    var textures: FloatArray = floatArrayOf(
             // top left
             // bottom left
 

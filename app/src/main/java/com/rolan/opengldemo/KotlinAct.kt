@@ -23,19 +23,19 @@ class KotlinAct:BaseKotlinAct(){
     ,R.id.tv_transform)
     fun click(view: View) {
         when (view.id) {
-            R.id.tv_triangle -> {
+            R.id.tv_triangle -> {//三角形
                 goWidget(TriangleView_01::class.java)
             }
-            R.id.tv_rectangle->{
+            R.id.tv_rectangle->{//矩形
                 goWidget(RectangleView_02::class.java)
             }
-            R.id.tv_shaders->{
+            R.id.tv_shaders->{//着色器
                 goWidget(ShaderView_03::class.java)
             }
-            R.id.tv_textures->{
+            R.id.tv_textures->{//纹理贴图
                 goWidget(TexturesView_04::class.java)
             }
-            R.id.tv_transform->{
+            R.id.tv_transform->{//矩阵变换
                 goWidget(TransformView_05::class.java)
             }
         }

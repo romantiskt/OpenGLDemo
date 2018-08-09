@@ -55,11 +55,16 @@ class TransformView_05(context: Context?) : BaseOpenGLKotlinView(context) {
             1.0f, 1.0f, // top right
             0.0f, 1.0f,
             0.0f, 0.0f
-
-
-
-
     )
+
+    private val mMVPMatrix =floatArrayOf(
+            1.0f,0.0f,0.0f,0.0f,
+            0.0f,1.0f,0.0f,0.0f,
+            0.0f,0.0f,1.0f,0.0f,
+            0.0f,0.0f,0.0f,1.0f
+    )
+    private val mMatrixCamera = FloatArray(16)    //相机矩阵
+    private val mMatrixProjection = FloatArray(16)    //投影矩阵
     var gVertexShader =
             "attribute vec4 vPosition;\n" +
                     "attribute vec3 color;\n"+
@@ -68,7 +73,7 @@ class TransformView_05(context: Context?) : BaseOpenGLKotlinView(context) {
                     "varying vec2 v_texCoord;\n" +
                     "uniform mat4 uMVPMatrix;\n" +
                     "void main() {\n" +
-                    "  gl_Position =  vPosition;;\n" +
+                    "  gl_Position = uMVPMatrix*vPosition;\n" +
                     "vertexColor = vec4(color,1.0);\n"+
                     " v_texCoord = vec2(a_texCoord.x,a_texCoord.y);" +
 //					"   gl_PointSize = 100;\n"+   //设置点的大小
@@ -81,7 +86,6 @@ class TransformView_05(context: Context?) : BaseOpenGLKotlinView(context) {
                     "void main() {\n" +
                     "  gl_FragColor = texture2D(s_texture, v_texCoord);\n" +
                     "}\n"
-
     override fun onDrawFrame(gl: GL10) {
         // 获取图形的顶点坐标
         var verticesBuf = getFloatArraryBuffer(vertices);
@@ -91,6 +95,9 @@ class TransformView_05(context: Context?) : BaseOpenGLKotlinView(context) {
 
         GLES20.glUseProgram(gProgram);
         GLES20.glUniform1i(mTexSamplerHandle, 0);
+
+        Matrix.rotateM(mMVPMatrix, 0, 1f, 0f, 0f, 1.0f)//旋转
+        GLES20.glUniformMatrix4fv(mMatrixHandle, 1, false, mMVPMatrix, 0);
 
         GLES20.glVertexAttribPointer(gPosition, 3, GLES20.GL_FLOAT, false, 3*4, verticesBuf);
         GLES20.glEnableVertexAttribArray(gPosition);
@@ -107,9 +114,20 @@ class TransformView_05(context: Context?) : BaseOpenGLKotlinView(context) {
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices.size, GLES20.GL_UNSIGNED_SHORT, indexBuf)
         GLES20.glDisableVertexAttribArray(gPosition)
         GLES20.glDisableVertexAttribArray(gColor)
+
     }
 
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
+//        Matrix.perspectiveM(mMVPMatrix, 0, 45f, 1f, 0.1f, 10f)
+
+//        Matrix.scaleM(mMVPMatrix,0,0.5f,0.5f,0.5f)
+        val ans = FloatArray(16)
+        Matrix.multiplyMM(ans, 0, mMatrixCamera, 0, mMVPMatrix, 0)
+        Matrix.multiplyMM(ans, 0, mMatrixProjection, 0, ans, 0)
+        Matrix.translateM(mMVPMatrix, 0, 0.5f, 0f, 0f)//位移
+        Matrix.rotateM(mMVPMatrix, 0, 60f, 0f, 0f, 1.0f)//旋转
+        Matrix.scaleM(mMVPMatrix, 0, 0.5f, 0.5f, 0.5f)//缩放
+
     }
 
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {

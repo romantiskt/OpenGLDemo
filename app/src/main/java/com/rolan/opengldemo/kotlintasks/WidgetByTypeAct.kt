@@ -7,6 +7,7 @@ import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 /**
  * Created by wangyang on 2018/8/8.下午2:45
+ * 展示不同view的activity
  */
 
 

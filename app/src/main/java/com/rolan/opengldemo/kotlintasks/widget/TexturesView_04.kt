@@ -26,9 +26,10 @@ class TexturesView_04(context: Context?) : BaseOpenGLKotlinView(context) {
     private var gColor: Int = 0
     private var mTexCoordHandle: Int = 0
     private var mTexSamplerHandle: Int = 0
+    private var mTexSamplerHandle2: Int = 0
     private var mMatrixHandle: Int = 0
     private var EBO: Int = 0
-    private val mTexName:Int=0;
+    private val mTexName: Int = 0;
     var vertices: FloatArray = floatArrayOf(
             0.5f, 0.5f, 0.0f,   // 右上角
             0.5f, -0.5f, 0.0f,  // 右下角
@@ -43,43 +44,42 @@ class TexturesView_04(context: Context?) : BaseOpenGLKotlinView(context) {
 
     )
     var color: FloatArray = floatArrayOf(
-            1.0f, 0.0f, 0.0f ,
+            1.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f,
             0.0f, 0.0f, 1.0f
     )
-    var textures:FloatArray= floatArrayOf(//顺序改变可对纹理产生旋转的效果 支持 90 180 270度旋转
-             // top left
-             // bottom left
+    var textures: FloatArray = floatArrayOf(//顺序改变可对纹理产生旋转的效果 支持 90 180 270度旋转
+            // top left
+            // bottom left
 
-            1.0f, 0.0f, // bottom right
-            1.0f, 1.0f, // top right
-            0.0f, 1.0f,
+            2.0f, 0.0f, // bottom right
+            2.0f, 2.0f, // top right
+            0.0f, 2.0f,
             0.0f, 0.0f
-
-
 
 
     )
     var gVertexShader =
             "attribute vec4 vPosition;\n" +
-                    "attribute vec3 color;\n"+
-                    "varying vec4 vertexColor;\n"+
+                    "attribute vec3 color;\n" +
+                    "varying vec4 vertexColor;\n" +
                     "attribute vec2 a_texCoord;\n" +
                     "varying vec2 v_texCoord;\n" +
                     "uniform mat4 uMVPMatrix;\n" +
                     "void main() {\n" +
                     "  gl_Position =  vPosition;;\n" +
-                    "vertexColor = vec4(color,1.0);\n"+
+                    "vertexColor = vec4(color,1.0);\n" +
                     " v_texCoord = vec2(a_texCoord.x,a_texCoord.y);" +
 //					"   gl_PointSize = 100;\n"+   //设置点的大小
                     "}\n"
     var gFragmentShader =
             "precision mediump float;\n" +
-                    "varying vec4 vertexColor;\n"+
+                    "varying vec4 vertexColor;\n" +
                     "varying vec2 v_texCoord;\n" +
                     "uniform sampler2D s_texture;\n" +
+                    "uniform sampler2D texture2;" +
                     "void main() {\n" +
-                    "  gl_FragColor = texture2D(s_texture, v_texCoord);\n" +
+                    "  gl_FragColor = mix(texture2D(s_texture, v_texCoord),texture2D(texture2, v_texCoord),0.8);\n" +
                     "}\n"
 
     override fun onDrawFrame(gl: GL10) {
@@ -91,12 +91,13 @@ class TexturesView_04(context: Context?) : BaseOpenGLKotlinView(context) {
 
         GLES20.glUseProgram(gProgram);
         GLES20.glUniform1i(mTexSamplerHandle, 0);
+        GLES20.glUniform1i(mTexSamplerHandle2, 1);
 
-        GLES20.glVertexAttribPointer(gPosition, 3, GLES20.GL_FLOAT, false, 3*4, verticesBuf);
+        GLES20.glVertexAttribPointer(gPosition, 3, GLES20.GL_FLOAT, false, 3 * 4, verticesBuf);
         GLES20.glEnableVertexAttribArray(gPosition);
 
         //设置绘制三角形的颜色
-        GLES20.glVertexAttribPointer(gColor, 4,GLES20.GL_FLOAT, false,3*4, colorBuf)
+        GLES20.glVertexAttribPointer(gColor, 4, GLES20.GL_FLOAT, false, 3 * 4, colorBuf)
         GLES20.glEnableVertexAttribArray(gColor)
 
 
@@ -123,14 +124,14 @@ class TexturesView_04(context: Context?) : BaseOpenGLKotlinView(context) {
         gColor = GLES20.glGetAttribLocation(gProgram, "color");
         mTexCoordHandle = GLES20.glGetAttribLocation(gProgram, "a_texCoord");
         mTexSamplerHandle = GLES20.glGetUniformLocation(gProgram, "s_texture");
+        mTexSamplerHandle2 = GLES20.glGetUniformLocation(gProgram, "texture2");
         mMatrixHandle = GLES20.glGetUniformLocation(gProgram, "uMVPMatrix");
-
-         var texNames = IntArray(1)
-        GLES20.glGenTextures(1, texNames, 0)
-        val mTexName = texNames[0]
-        val bitmap:Bitmap = BitmapFactory.decodeResource(mContext.resources,R.drawable.xiaoxiong)
+        //多重纹理
+        var texNames = IntArray(2)
+        GLES20.glGenTextures(2, texNames, 0)
+        val bitmap: Bitmap = BitmapFactory.decodeResource(mContext.resources, R.drawable.xiaoxiong)
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texNames[0])
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
                 GLES20.GL_LINEAR)
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
@@ -140,6 +141,20 @@ class TexturesView_04(context: Context?) : BaseOpenGLKotlinView(context) {
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
                 GLES20.GL_REPEAT)
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0)
+        bitmap.recycle()
+
+        val bitmap2: Bitmap = BitmapFactory.decodeResource(mContext.resources, R.drawable.ic_launcher_round)
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE1)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texNames[1])
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                GLES20.GL_LINEAR)
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                GLES20.GL_LINEAR)
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
+                GLES20.GL_REPEAT)
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
+                GLES20.GL_REPEAT)
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap2, 0)
         bitmap.recycle()
     }
 

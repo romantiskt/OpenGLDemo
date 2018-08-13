@@ -56,4 +56,14 @@
         android:gravity="center"
         android:background="@android:color/darker_gray"
         android:id="@+id/tv_transform"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:text="正方体"
+        android:clickable="true"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/tv_cube"/>
 </LinearLayout>

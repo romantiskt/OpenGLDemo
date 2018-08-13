@@ -9,7 +9,7 @@ import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 /**
  * Created by wangyang on 2018/8/6.下午9:09
  */
-class KotlinAct:BaseKotlinAct(){
+class KotlinAct : BaseKotlinAct() {
     override fun inflateLayoutId(): Any {
         return R.layout.activity_kotlin
     }
@@ -19,24 +19,26 @@ class KotlinAct:BaseKotlinAct(){
         setUnBinder(ButterKnife.bind(this))
     }
 
-    @OnClick(R.id.tv_triangle,R.id.tv_rectangle,R.id.tv_shaders,R.id.tv_textures
-    ,R.id.tv_transform)
+    @OnClick(R.id.tv_triangle, R.id.tv_rectangle, R.id.tv_shaders, R.id.tv_textures, R.id.tv_transform,R.id.tv_cube)
     fun click(view: View) {
         when (view.id) {
             R.id.tv_triangle -> {//三角形
                 goWidget(TriangleView_01::class.java)
             }
-            R.id.tv_rectangle->{//矩形
+            R.id.tv_rectangle -> {//矩形
                 goWidget(RectangleView_02::class.java)
             }
-            R.id.tv_shaders->{//着色器
+            R.id.tv_shaders -> {//着色器
                 goWidget(ShaderView_03::class.java)
             }
-            R.id.tv_textures->{//纹理贴图
+            R.id.tv_textures -> {//纹理贴图
                 goWidget(TexturesView_04::class.java)
             }
-            R.id.tv_transform->{//矩阵变换
+            R.id.tv_transform -> {//矩阵变换
                 goWidget(TransformView_05::class.java)
+            }
+            R.id.tv_cube -> {//正方体
+                goWidget(CubeView_06::class.java)
             }
         }
     }

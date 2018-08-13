@@ -17,7 +17,7 @@ import android.opengl.Matrix.perspectiveM
 
 /**
  * Created by wangyang on 2018/8/8.下午6:12
- * 颜色混合的三角形
+ * 纹理贴图
  */
 
 class TexturesView_04(context: Context?) : BaseOpenGLKotlinView(context) {

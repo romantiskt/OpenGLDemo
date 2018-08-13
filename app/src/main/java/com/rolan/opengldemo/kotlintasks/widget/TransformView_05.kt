@@ -17,7 +17,7 @@ import android.opengl.Matrix.perspectiveM
 
 /**
  * Created by wangyang on 2018/8/8.下午6:12
- * 颜色混合的三角形
+ * 矩阵变换
  */
 
 class TransformView_05(context: Context?) : BaseOpenGLKotlinView(context) {
@@ -132,6 +132,7 @@ class TransformView_05(context: Context?) : BaseOpenGLKotlinView(context) {
 
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
         super.onSurfaceCreated(gl, config)
+
         gProgram = createProgram(gVertexShader, gFragmentShader)
         if (gProgram == 0) {
             LogUtils.dTag(TAG, "Could not create gProgram")

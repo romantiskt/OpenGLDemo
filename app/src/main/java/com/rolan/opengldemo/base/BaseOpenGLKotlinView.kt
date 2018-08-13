@@ -68,11 +68,11 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
         override fun onDrawFrame(gl: GL10) {
             grey += 0.01f;
             if (grey > 1.0f) {
-                grey = 0.0f;
+                grey = 0.0f
             }
             GLES20.glClearColor(grey, grey,grey, 1.0f)
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
-            this@BaseOpenGLKotlinView.onDrawFrame(gl);
+            this@BaseOpenGLKotlinView.onDrawFrame(gl)
         }
 
         override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {

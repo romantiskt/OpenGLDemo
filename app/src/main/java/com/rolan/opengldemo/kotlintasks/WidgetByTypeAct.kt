@@ -12,11 +12,22 @@ import com.wang.advance.tasks.kotlin.base.BaseKotlinAct
 
 
 class WidgetByTypeAct : BaseKotlinAct() {
+    lateinit var mView: BaseOpenGLKotlinView;
     override fun inflateLayoutId(): Any {
         val classExtra: Class<out BaseOpenGLKotlinView> = intent.getSerializableExtra(Constants.EXA_INTENT_DATA) as Class<out BaseOpenGLKotlinView>
         val constructor = classExtra.getDeclaredConstructor(Context::class.java)
         constructor.isAccessible = true
-        val newInstance = constructor.newInstance(this);
-        return newInstance
+        mView = constructor.newInstance(this);
+        return mView
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mView?.onPause();
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mView?.onResume();
     }
 }

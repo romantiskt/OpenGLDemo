@@ -2,7 +2,6 @@ package com.rolan.opengldemo.kotlintasks.widget
 
 import android.content.Context
 import android.opengl.GLES20
-import android.opengl.GLES20.glGetAttribLocation
 import com.rolan.opengldemo.base.BaseOpenGLKotlinView
 import com.rolan.opengldemo.utils.LogUtils
 import javax.microedition.khronos.egl.EGLConfig
@@ -10,10 +9,7 @@ import javax.microedition.khronos.opengles.GL10
 import android.opengl.GLUtils
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
-import android.opengl.Matrix
-import com.rolan.opengldemo.MyApp
 import com.rolan.opengldemo.R
-import android.opengl.Matrix.perspectiveM
 
 /**
  * Created by wangyang on 2018/8/8.下午6:12

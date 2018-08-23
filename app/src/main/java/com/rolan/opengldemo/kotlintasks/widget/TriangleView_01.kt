@@ -3,9 +3,6 @@ package com.rolan.opengldemo.kotlintasks.widget
 import android.content.Context
 import android.opengl.GLES20
 import com.rolan.opengldemo.base.BaseOpenGLKotlinView
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

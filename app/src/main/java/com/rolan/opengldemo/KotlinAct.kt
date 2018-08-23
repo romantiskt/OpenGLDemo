@@ -19,7 +19,8 @@ class KotlinAct : BaseKotlinAct() {
         setUnBinder(ButterKnife.bind(this))
     }
 
-    @OnClick(R.id.tv_triangle, R.id.tv_rectangle, R.id.tv_shaders, R.id.tv_textures, R.id.tv_transform,R.id.tv_cube)
+    @OnClick(R.id.tv_triangle, R.id.tv_rectangle, R.id.tv_shaders, R.id.tv_textures, R.id.tv_transform,R.id.tv_cube
+    ,R.id.tv_camera)
     fun click(view: View) {
         when (view.id) {
             R.id.tv_triangle -> {//三角形
@@ -39,6 +40,9 @@ class KotlinAct : BaseKotlinAct() {
             }
             R.id.tv_cube -> {//正方体
                 goWidget(CubeView_06::class.java)
+            }
+            R.id.tv_camera->{
+                goWidget(CameraView_07::class.java)
             }
         }
     }

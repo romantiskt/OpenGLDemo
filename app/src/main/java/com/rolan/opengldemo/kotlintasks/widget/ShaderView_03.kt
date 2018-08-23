@@ -2,7 +2,6 @@ package com.rolan.opengldemo.kotlintasks.widget
 
 import android.content.Context
 import android.opengl.GLES20
-import android.opengl.GLES20.glGetAttribLocation
 import com.rolan.opengldemo.base.BaseOpenGLKotlinView
 import com.rolan.opengldemo.utils.LogUtils
 import javax.microedition.khronos.egl.EGLConfig

@@ -5,6 +5,7 @@ import android.graphics.PixelFormat
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import android.util.Log
+import android.view.MotionEvent
 import com.rolan.opengldemo.utils.LogUtils
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -16,13 +17,17 @@ import javax.microedition.khronos.egl.EGLContext
 import javax.microedition.khronos.egl.EGLDisplay
 import javax.microedition.khronos.opengles.GL10
 
+
 /**
  * Created by wangyang on 2018/7/26.下午4:02
  */
 abstract class BaseOpenGLKotlinView : GLSurfaceView {
     var TAG: String? = this.javaClass.simpleName;
-    var grey: Float = 0f;
-    var mContext:Context=this.context;
+    var grey: Float = 0f
+    var mContext: Context = this.context;
+    private var pX: Float = 0.toFloat()
+    private var pY: Float = 0.toFloat()
+    lateinit var mRenderer:Renderer
 
     constructor(context: Context?) : super(context) {
         init(false, 0, 0)
@@ -34,7 +39,8 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
         }
         setEGLContextClientVersion(2)
         setEGLContextFactory(ContextFactory())//绑定一个context
-        setRenderer(Renderer())//设置一个视图提供者
+        mRenderer=Renderer()
+        setRenderer(mRenderer)//设置一个视图提供者
     }
 
     inner class ContextFactory : GLSurfaceView.EGLContextFactory {
@@ -64,13 +70,41 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
 
     }
 
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        var x:Float = event?.x!!
+        val y:Float = event?.y!!
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN -> {
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                var dx = x.minus(pX)
+                var dy = y.minus(pY)
+                onMove(dx/width*360,x,y)
+                requestRender()
+            }
+
+            MotionEvent.ACTION_UP -> {
+
+            }
+        }
+        pX = x;
+        pY = y;
+        return true
+    }
+
     inner class Renderer : GLSurfaceView.Renderer {
+
+        @Volatile
+        var mAngle: Float = 0.toFloat()
+
+
         override fun onDrawFrame(gl: GL10) {
             grey += 0.01f;
             if (grey > 1.0f) {
                 grey = 0.0f
             }
-            GLES20.glClearColor(grey, grey,grey, 1.0f)
+            GLES20.glClearColor(grey, grey, grey, 1.0f)
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
             this@BaseOpenGLKotlinView.onDrawFrame(gl)
         }
@@ -89,6 +123,7 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
     abstract fun onDrawFrame(gl: GL10)
     abstract fun onSurfaceChanged(gl: GL10, width: Int, height: Int)
     open fun onSurfaceCreated(gl: GL10, config: EGLConfig) {}
+    open fun onMove(angleX:Float, x:Float, y:Float) {}
 
     fun loadShader(shaderType: Int, sourceCode: String): Int {
         var shader: Int = GLES20.glCreateShader(shaderType)//1.创建一个着色器，返回着色器id，如果返回0则为创建失败
@@ -122,7 +157,7 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
             GLES20.glAttachShader(program, vertexShader)//4. 向着色程序中加入顶点着色器
             GLES20.glAttachShader(program, pixelShader)//5. 向着色程序中加入片元着色器
             GLES20.glLinkProgram(program)//6. 链接程序
-            var linkStatus:IntArray = IntArray(1);// 存放链接成功program数量的数组
+            var linkStatus: IntArray = IntArray(1);// 存放链接成功program数量的数组
             GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0);//获取链接程序结果
             if (linkStatus[0] != GLES20.GL_TRUE) {//链接程序失败
                 LogUtils.dTag(TAG, "Could not link program: ")
@@ -134,7 +169,7 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
         return program
     }
 
-    fun getFloatArraryBuffer(data:FloatArray): FloatBuffer {
+    fun getFloatArraryBuffer(data: FloatArray): FloatBuffer {
         // data.size*4是因为一个float占四个字节
         var vbb: ByteBuffer = ByteBuffer.allocateDirect(data.size * 4)  // 创建数据缓冲
         vbb.order(ByteOrder.nativeOrder())           //设置字节顺序
@@ -143,7 +178,8 @@ abstract class BaseOpenGLKotlinView : GLSurfaceView {
         vertexBuf.position(0)                         //设置缓冲区起始位置
         return vertexBuf;
     }
-    fun getShortArraryBuffer(data:ShortArray): ShortBuffer {
+
+    fun getShortArraryBuffer(data: ShortArray): ShortBuffer {
         // data.size*4是因为一个float占四个字节
         var vbb: ByteBuffer = ByteBuffer.allocateDirect(data.size * 2)  // 创建数据缓冲
         vbb.order(ByteOrder.nativeOrder())           //设置字节顺序
